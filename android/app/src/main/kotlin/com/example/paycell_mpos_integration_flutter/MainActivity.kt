@@ -1,6 +1,10 @@
 package com.example.paycell_mpos_integration_flutter
 
+import android.content.Intent
+import com.dgpays.mposgatewaylib.LaunchMposInterface
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodChannel
 
 class MainActivity: FlutterActivity() {
 
@@ -17,11 +21,11 @@ class MainActivity: FlutterActivity() {
         channel.setMethodCallHandler(handleMethodCall)
     }
 
-    private val handleMethodCall = MethodCallHandler { call, result ->
-        
+    private val handleMethodCall = MethodChannel.MethodCallHandler { call, result ->
+
         // Get the arguments from the method call
         val arguments = call.arguments<String>()
-        
+
         // Call the appropriate function based on method name
         when (call.method) {
             "startSalesOperation" -> launchPaycellPos(arguments!!, reqCode = 1, result)
@@ -48,7 +52,7 @@ class MainActivity: FlutterActivity() {
         } else {
             val bundle = data.extras
             // Invoke the method with the result data
-            channel.invokeMethod("onActivityResult", bundle["mposResult"].toString())
+            channel.invokeMethod("onActivityResult", bundle?.get("mposResult").toString())
         }
     }
 }
