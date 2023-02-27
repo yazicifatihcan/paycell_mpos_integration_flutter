@@ -52,6 +52,10 @@ android {
 
     buildTypes {
         release {
+            //Uygulama debug modda sorunsuz çalışırken release modda çalışmıyorsa aşağıdaki iki satırı eklemeniz gerekmektedir
+            shrinkResources false
+            minifyEnabled false
+            //
             signingConfig signingConfigs.debug
         }
     }
